@@ -6,14 +6,15 @@ int main() {
     int n, m;
     cin >> n >> m;
 
-    vector<vector<int>> dist(n + 1, vector<int>(n + 1, INT16_MAX));
+    vector<vector<float>> dist(n + 1, vector<float>(n + 1, INT16_MAX));
 
     for (int i = 1; i <= n; i++) {
         dist[i][i] = 0;
     }
 
     for (int i = 0; i < m; i++) {
-        int start, end, weight;
+        int start, end;
+        float weight;
         cin >> start >> end >> weight;
         dist[start][end] = weight;
     }
@@ -33,9 +34,9 @@ int main() {
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= n; j++) {
             if (dist[i][j] == INT16_MAX) {
-                cout << "N ";
+                cout << "N" << ((j == n) ? "" : " ");
             } else {
-                cout << dist[i][j] << " ";
+                cout << dist[i][j] << ((j == n) ? "" : " ");
             }
         }
         cout << endl;

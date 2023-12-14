@@ -5,7 +5,7 @@ using namespace std;
 
 struct Edge {
     int start, end;
-    int weight;
+    float weight;
     Edge(int n1, int n2, int w) {
         start = n1;
         end = n2;
@@ -33,7 +33,7 @@ int main() {
 
     cin >> start;
 
-    vector<int> ans_weight(n + 1, INT16_MAX);
+    vector<float> ans_weight(n + 1, INT16_MAX);
     vector<int> ans_parent(n + 1, 0);
 
     ans_weight[start] = 0;
@@ -56,12 +56,12 @@ int main() {
     }
 
     for (int i = 1; i <= n; i++) {
-        cout << ans_weight[i] << " ";
+        cout << ans_weight[i] << ((i == n) ? "" : " ");
     }
     cout << endl;
 
     for (int i = 1; i <= n; i++) {
-        cout << ans_parent[i] << " ";
+        cout << ans_parent[i] << ((i == n) ? "" : " ");
     }
 
     return 0;

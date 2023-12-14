@@ -6,7 +6,7 @@
 using namespace std;
 struct Edge {
     int start, end;
-    int weight;
+    float weight;
     Edge(int n1, int n2, int w) {
         start = n1;
         end = n2;
@@ -34,9 +34,8 @@ int main()
         Edge temp;
         cin >> temp.start >> temp.end >> temp.weight;
         edges[temp.start].push_back(temp);
-        sort(edges[temp.start].begin(), edges[temp.start].end(), cmp);
     }
-    vector<int> ans_weight(n + 1, INT16_MAX);
+    vector<float> ans_weight(n + 1, INT16_MAX);
     vector<int> ans_parent(n + 1);
     vector<int> Selected_Node;
     vector<bool> Selected(n + 1,false);
@@ -48,18 +47,13 @@ int main()
     int count = 0;
     while (count != n - 1)
     {
-        for (int i = 1; i <= n; i++) { // Choose the destination
-            if (i == start)
-                continue;
-            for (int j = 0; j < Selected_Node.size(); j++) {
-                vector<Edge> Current_Node_Edge = edges[Selected_Node[j]];
-                for (int k = 0; k < Current_Node_Edge.size(); k++) {
-                    if (Current_Node_Edge[k].end == i) {
-                        if (ans_weight[Current_Node_Edge[k].start] + Current_Node_Edge[k].weight < ans_weight[Current_Node_Edge[k].end]) {
-                            ans_weight[Current_Node_Edge[k].end] = ans_weight[Current_Node_Edge[k].start] + Current_Node_Edge[k].weight;
-                            ans_parent[Current_Node_Edge[k].end] = Current_Node_Edge[k].start;
-                        }
-                    }
+
+        vector<Edge> Current_Node_Edge = edges[Selected_Node[Selected_Node.size()-1]];
+        if(Current_Node_Edge.size() != 0){
+            for (int k = 0; k < Current_Node_Edge.size(); k++) {
+                if (ans_weight[Current_Node_Edge[k].start] + Current_Node_Edge[k].weight < ans_weight[Current_Node_Edge[k].end]) {
+                    ans_weight[Current_Node_Edge[k].end] = ans_weight[Current_Node_Edge[k].start] + Current_Node_Edge[k].weight;
+                    ans_parent[Current_Node_Edge[k].end] = Current_Node_Edge[k].start;
                 }
             }
         }
@@ -75,8 +69,8 @@ int main()
         count++;
     }
     for (int i = 1; i <= n; i++)
-        cout << ans_weight[i] << " ";
+        cout << ans_weight[i] << ((i == n) ? "" : " ");
     cout << endl;
     for (int i = 1; i <= n; i++)
-        cout << ans_parent[i] << " ";
+        cout << ans_parent[i] << ((i == n) ? "" : " ");
 }
